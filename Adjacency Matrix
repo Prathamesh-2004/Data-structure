@@ -1,0 +1,97 @@
+#include<iostream>
+using namespace std;
+class matrix
+{
+    public:
+           int n,w,i,j,k;
+           string start,dist;
+           
+           int a[100][100];
+           string v[10];
+           
+        matrix(int n)
+       {
+            this->n=n;
+            for(i=0;i<n;i++)
+            {
+                for(j=0;j<n;j++)
+                {
+                    a[i][j]=0;
+                }
+            }
+        
+       
+        cout<<"enter "<<n<<" vertex:";
+        for(int i=0;i<n;i++)
+        {
+         cin>>v[i];   
+        }
+        
+    }    
+    void edge(int e)
+    {
+        for(i=0;i<e;i++)
+        {
+            cout<<"enter starting vertex:";
+            cin>>start;
+            cout<<"enter ending vertex:";
+            cin>>dist;
+            cout<<"enter distance between them:";
+            cin>>w;
+            
+             int c1=-1;
+            int c2=-1;
+           
+            
+            for(int k=0;k<n;k++)
+            {
+                if(v[k]==start)
+                {
+                    c1=k;
+                }
+                 if(v[k]==dist)
+                {
+                    c2=k;
+                }
+              
+              if(c1!=-1 && c2!=-1)
+              {
+                  a[c1][c2]=w;
+                  a[c2][c1]=w;
+              }
+                
+            }
+        }
+    }
+    void display()
+    {
+        cout<<"adjecency matrix:"<<endl;
+    for(int i=0;i<n;i++)
+    {
+        cout<<"\t"<<v[i];
+    }
+    cout<<"\n";
+    for(i=0;i<n;i++)
+            {
+                cout<<v[i]<<"\t";
+                for(j=0;j<n;j++)
+                {
+                    cout<<a[i][j]<<"\t";
+                }
+                cout<<endl;
+            }
+    }  
+};
+int main()
+{
+   int n,e;
+   cout<<"enter the total vertex:";
+   cin>>n;
+   matrix m1(n);
+   cout<<"enter the total edges:";
+   cin>>e;
+   m1.edge(e);
+   m1.display();
+    
+    return 0;
+}
