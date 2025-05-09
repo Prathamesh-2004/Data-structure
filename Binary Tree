@@ -1,0 +1,145 @@
+#include<iostream>
+using namespace std;
+
+class BT
+{
+    public:
+    string name;
+    int age;
+    BT*left;
+    BT*right;
+
+    BT(string nme,int agee)
+    {
+        name=nme;
+        age=agee;
+        left=NULL;
+        right=NULL;
+    }
+};
+BT*root=NULL;
+
+void insert(BT*temp,BT*current)
+{
+char ch;
+cout<<"Where you want to insert L/R";
+cin>>ch;
+if(ch=='l'||ch=='L')
+{
+    if(temp->left==NULL)
+    {
+        temp->left=current;
+    }
+    else{
+        insert(temp->left,current);
+    }
+}
+else if(ch=='r'||'R')
+{
+    if(temp->right==NULL)
+    {
+        temp->right=current;
+    }
+    else{
+        insert(temp->right,current);
+    }
+}
+else{
+    cout<<"Wrong choice...";
+}
+}
+
+void create()
+{
+    string name;
+    int age;
+    cout<<"Enter the name :";
+    cin>>name;
+    cout<<"Enter the age:";
+    cin>>age;
+    BT*newnode=new BT(name,age);
+    if(root==NULL)
+    {
+        root=newnode;
+    }
+    else{
+        insert(root,newnode);
+    }
+}
+
+int count=0;
+void Preorder(BT*root)
+{
+    if(root==NULL)
+    return;
+    cout<<"Name :"<<root->name<<"\tAge :"<<root->age<<endl;
+    count++;
+    Preorder(root->left);
+    Preorder(root->right);
+}
+
+void Count()
+{
+    cout<<"Total number of nodes are :"<<count;
+}
+
+int height(BT*root)
+{
+ if(root==NULL)
+ return -1;
+ int le=height(root->left);
+ int ri=height(root->right);
+ return max(le,ri)+1;
+}
+
+void Leaf(BT*root)
+{
+    if(root==NULL)
+    return;
+    if(root->left==NULL && root->right==NULL)
+    {
+        cout<<"Name :"<<root->name<<"\tAge :"<<root->age<<endl;       
+    }
+    Leaf(root->left);
+    Leaf(root->right);
+}
+
+int main()
+{
+    int ch;
+    do{
+      cout<<"\nMENU\n1.Insert\n2.Display\n3.Height\n4.Count\n5.Leafnode\n8.Exit\nEnter your Choice:";
+      cin>>ch;
+      switch(ch)
+      {
+        case 1:
+        create();
+        break;
+
+        case 2:
+        Preorder(root);
+        break;
+
+        case 3:
+        cout<<"Height of Tree is :"<<height(root)<<endl;
+        break;
+
+        case 4:
+        Count();
+        break;
+
+        case 5:
+        Leaf(root);
+        break;
+
+        case 8:cout<<"Exitting the program...";
+        break;
+
+        default:cout<<"Wrong choice..!";
+
+
+      }
+    }while(ch!=8);
+
+    return 0;
+}
