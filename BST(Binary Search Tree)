@@ -1,1 +1,226 @@
+#include<iostream>
+using namespace std;
+
+class BT{
+public:
+int emp_id;
+string emp_name;
+int salary;
+BT*left;
+BT*right;
+
+BT(int emp_id,string emp_name,int salary)
+{
+this->emp_id=emp_id;
+this->emp_name=emp_name;
+this->salary=salary;
+left=right=NULL;
+}
+
+};
+BT* root=NULL;
+
+void insert(BT*&temp,BT *current)
+{
+if(current->salary<temp->salary)
+{
+if(temp->left==NULL)
+{
+temp->left=current;
+}
+else{
+insert(temp->left,current);
+}
+}
+else
+{
+if(temp->right==NULL)
+{
+temp->right=current;
+}
+else{
+insert(temp->right,current);
+}
+
+}
+
+}
+
+
+void create()
+{
+int id,salary;
+string name;
+cout<<"Enter the id of Employee :";
+cin>>id;
+cout<<"Enter the name of Employee :";
+cin>>name;
+cout<<"Enter the salary of Employee :";
+cin>>salary;
+
+BT* newnode=new BT(id,name,salary);
+if(root==NULL){
+root=newnode;
+}
+else{
+insert(root,newnode);
+}
+}
+
+int count=0;
+float total=0.0;
+void inorder(BT* root)
+{
+if(root==NULL)
+{
+return;
+}
+inorder(root->left);
+cout<<"Name:"<<root->emp_name<<"\tID:"<<root->emp_id<<"\tSalary:"<<root->salary;
+count+=1;
+total+=root->salary;
+inorder(root->right);
+}
+
+float max_salary(BT*root)
+{
+if(root==NULL){
+return -1;
+}
+while(root!=NULL)
+{
+root=root->right;
+}
+return root->salary;
+}
+
+float min_salary(BT*root)
+{
+if(root==NULL){
+return -1;
+}
+while(root!=NULL)
+{
+root=root->left;
+}
+return root->salary;
+}
+
+
+void search(BT*root,int key)
+{
+if(root==NULL)
+{
+return ;
+}
+if(key==root->salary)
+{
+cout<<"Name:"<<root->emp_name<<"\tID:"<<root->emp_id<<"\tSalary:"<<root->salary;
+}
+else if(key<root->salary)
+{
+search(root->left,key);
+}
+else{
+search(root->right,key);
+}
+}
+
+void total_emp()
+{
+cout<<"There are total "<<count<<" employees";
+}
+
+void avg_salary()
+{
+if(count==0){
+cout<<"There is no employee in the company";
+}
+else{
+float avg=total/count;
+cout<<"Average salary of "<<count<<" Employee is :"<<avg;
+}
+}
+
+
+int main()
+{
+int ch;
+do{
+cout<<"\nMENU\n1.Insert\n2.Display\n3.Search\n4.Max salary\n5.Min Salary\n6.Total Employee\n7.Average salary\n8.Exit\nEnter your choice:";
+cin>>ch;
+
+switch(ch){
+case 1:create();
+       break;
+
+case 2:inorder(root);
+       break;
+
+case 3:int key;
+       cout<<"Enter key to search:";
+       cin>>key;
+       search(root,key);
+       break;
+
+case 4:max_salary(root);
+       cout<<"Maximum salary is:"<<root->salary;
+       break;
+
+case 5:min_salary(root);
+       cout<<"minimum salary is:"<<root->salary;
+       break;
+
+case 6:total_emp();
+       break;
+
+case 7:avg_salary();
+       break;
+
+case 8:cout<<"Exiting......";
+       break;
+
+default:cout<<"Wrong choice.";
+        break;
+
+}
+
+}while(ch!=8);
+
+
+
+
+
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
