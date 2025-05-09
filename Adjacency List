@@ -1,0 +1,101 @@
+#include<iostream>
+using namespace std;
+class list{
+    public:
+    string data;
+    int dis;
+    list *next;
+
+    list(string x,int y)
+    {
+        data=x;
+        dis=y;
+        next=NULL;
+    }
+    list(){
+
+    }
+    void insert(list *&head,list *temp)
+    {
+        
+        if(head==NULL)
+        {
+            head=temp;
+        }else{
+            list *current=head;
+            while(current->next!=NULL)
+            {
+                current = current->next;
+            }
+            current->next=temp;
+        }
+    }
+    void display(list *current)
+    {
+        if(current==NULL)
+        {
+            return;
+        }
+        while(current!=NULL)
+        {
+            cout<<current->data<<"("<<current->dis<<")  ";
+            current=current->next;
+        }
+    }
+};
+int main()
+{
+    int ch,City=0,edges,no,c1,c2,dist;
+    string arr[20],v1,v2,d;
+    list *hed[20],*temp;
+    list l;
+    do{
+        cout<<"3.Adjacency list\t4.Output(AL)\t6.Exit\nEnter choice :";
+        cin>>ch;
+        switch(ch)
+        {
+            case 3://adjacency list
+                   cout<<"Enter no.of Cities :";
+                   cin>>City;
+                   cout<<"Enter Cities :"<<endl;
+                   for(int i=0;i<City;i++)
+                   {
+                    cout<<"City-"<<i+1<<": ";
+                    cin>>arr[i];
+                   }
+                   for(int i=0;i<City;i++)
+                   {
+                    hed[i]=NULL;
+                    cout<<"Enter no.of adjacent Cities for City-"<<arr[i]<<" :";
+                    cin>>no;
+                    for(int j=0;j<no;j++)
+                    {
+                        cout<<"City-"<<j+1<<" :";
+                        cin>>d;
+                        cout<<"Enter distance of city-"<<d<<" from city-"<<arr[i]<<": ";
+                        cin>>dist;
+                        temp=new list(d,dist);
+                        if(hed[i]==NULL)
+                        {
+                            hed[i]=temp;
+                        }else{
+                        l.insert(hed[i],temp);
+                        }
+                    }
+                   
+                   }
+                 break;
+
+            case 4://display
+                   for(int i=0;i<City;i++)
+                   {
+                    cout<<arr[i]<<"-->";
+                    l.display(hed[i]);
+                    cout<<endl;
+                   }
+                   break;
+
+           
+        }
+    }while(ch!=6);
+}
