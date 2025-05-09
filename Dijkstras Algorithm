@@ -1,0 +1,90 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+class Graph {
+public:
+    int v, e, m[100][100], current;
+    vector<int> visited, dis;
+
+    Graph(int x, int y) {
+        v = x;
+        e = y;
+        for (int i = 0; i < v; i++)
+            for (int j = 0; j < v; j++)
+                m[i][j] = 0;
+        for(int i=0;i<v;i++)
+        {
+        visited.push_back(0);
+        dis.push_back(999);
+        }
+    }
+
+    void edge() {
+        int st, end, dist;
+        for (int i = 0; i < e; i++) {
+            cout << "Enter Starting vertex: ";
+            cin >> st;
+            cout << "Enter Ending vertex: ";
+            cin >> end;
+            cout << "Enter Distance (weight): ";
+            cin >> dist;
+            m[st][end] = dist;
+            m[end][st] = dist; // for undirected graph
+        }
+    }
+
+    void display() {
+        cout << "\nAdjacency Matrix:\n";
+        for (int i = 0; i < v; i++) {
+            for (int j = 0; j < v; j++) {
+                cout << m[i][j] << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    void DJ(){
+        dis[0] = 0;
+        int count = 0;
+        while (count < v) {
+            int t = 999;
+            for (int i = 0; i < v; i++) {
+                if (visited[i] == 0 && dis[i] < t) {
+                    t = dis[i];
+                    current = i;
+                }
+            }
+            visited[current] = 1;
+            count++;
+
+            for (int i = 0; i < v; i++) {
+                if (m[current][i] != 0 && visited[i] == 0) {
+                    if (dis[current] + m[current][i] < dis[i]) {
+                        dis[i] = dis[current] + m[current][i];
+                    }
+                }
+            }
+        }
+
+        cout << "\nShortest Path from Node 0:\n";
+        for (int i = 0; i < v; i++) {
+            cout << "0 -> " << i << " = " << dis[i] << endl;
+        }
+    }
+};
+
+int main() {
+    int ver, edge;
+    cout << "Enter number of vertices: ";
+    cin >> ver;
+    cout << "Enter number of edges: ";
+    cin >> edge;
+
+    Graph g(ver, edge);
+    g.edge();
+    g.display();
+    g.DJ();
+
+    return 0;
+}
